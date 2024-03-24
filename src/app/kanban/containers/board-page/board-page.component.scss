@@ -1,0 +1,11 @@
+.columns{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.column {
+    flex-grow: 1;
+    background-color: rgb(233, 231, 231);
+    padding: 10px 20px;
+}

@@ -1,0 +1,17 @@
+<main>
+  <button mat-raised-button (click)="openDialog()">
+    Add Todo
+    <mat-icon>add</mat-icon>
+  </button>
+  <section class="columns">
+    @for(title of titlesColumns; track title.id) {
+      <div class="column">
+        <h2>{{title.title}}</h2>
+        @for(todo of todos; track todo.id) {
+          <app-todo-card [title]="todo.title" [description]="todo.description"></app-todo-card>
+        }
+      </div>
+    }
+  </section>
+</main>
+  
