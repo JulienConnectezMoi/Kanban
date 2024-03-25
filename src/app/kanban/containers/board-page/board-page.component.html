@@ -8,10 +8,9 @@
       <div class="column">
         <h2>{{title.title}}</h2>
         @for(todo of todos; track todo.id) {
-          <app-todo-card [title]="todo.title" [description]="todo.description"></app-todo-card>
+          <app-card [title]="todo.title" [description]="todo.description"></app-card>
         }
       </div>
     }
   </section>
 </main>
-  

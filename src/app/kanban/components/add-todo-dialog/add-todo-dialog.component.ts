@@ -4,11 +4,12 @@ import { MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/mater
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-todo-dialog',
   standalone: true,
-  imports: [MatFormField, MatDialogActions, MatDialogContent, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [MatFormField, MatDialogActions, MatDialogContent, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
   templateUrl: './add-todo-dialog.component.html',
   styleUrls: ['./add-todo-dialog.component.scss']
 })
@@ -28,7 +29,7 @@ export class AddTodoDialogComponent {
   }
 
   public onSaveClick(): void {
-    if (this.todoForm.valid) { 
+    if (this.todoForm.valid) {
       const title = this.todoForm.value.title;
       const description = this.todoForm.value.description;
 

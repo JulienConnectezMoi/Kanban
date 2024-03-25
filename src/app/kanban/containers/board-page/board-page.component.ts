@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import {TodoCardComponent} from '../../components/todo-card/todo-card.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTodoDialogComponent } from '../../components/add-todo-dialog/add-todo-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-board-page',
   standalone: true,
-  imports: [TodoCardComponent, MatIconModule, MatButtonModule],
+  imports: [CardComponent, MatIconModule, MatButtonModule],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
 })
