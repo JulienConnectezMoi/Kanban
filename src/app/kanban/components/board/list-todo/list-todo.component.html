@@ -1,0 +1,19 @@
+@for (taskList of taskLists; track taskList) {
+  <div class="example-container">
+    <h2>{{ taskList.title }}</h2>
+
+    <div
+      cdkDropList
+      [id]="taskList.id"
+      [cdkDropListData]="taskList.tasks"
+      [cdkDropListConnectedTo]="['todo', 'progress', 'standby', 'blocked', 'close']"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, taskList.tasks)">
+      <div>
+        @for(task of taskList.tasks; track task) {
+          <div class="example-box" cdkDrag>{{task.title}}</div>
+        }
+      </div>
+    </div>
+  </div>
+}

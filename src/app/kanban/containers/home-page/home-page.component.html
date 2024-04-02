@@ -4,9 +4,5 @@
     <mat-icon>add</mat-icon>
   </button>
 
-  <section class="columns">
-    @for(board of boards; track board.id) {
-      <app-card [title]="board.title" [description]="board.description" [backgroundImageUrl]="board.url"></app-card>
-    }
-  </section>
+  <app-list-board></app-list-board>
 </main>

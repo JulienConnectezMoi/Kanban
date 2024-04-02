@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -12,10 +12,14 @@ import { AuthService } from './auth/services/auth.service';
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'kanban';
 
   constructor(public authService: AuthService) {
-    
+
+  }
+
+  ngOnInit(): void {
+
   }
 }
