@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { Board } from '../../../../core/models/class/board.class';
 
 @Component({
   selector: 'app-item-board',
@@ -9,10 +10,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './item-board.component.scss'
 })
 export class ItemBoardComponent implements OnInit {
-  @Input() id: number = 0;
-  @Input() title: string = "";
-  @Input() description: string = "";
-  @Input() backgroundImageUrl?: string;
+  @Input() public board!: Board;
 
   constructor() {}
 

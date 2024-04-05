@@ -1,26 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { CardComponent } from '../../board/card/card.component';
-import { LocalStorageService } from '../../../../core/services/local-storage.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Board } from '../../../../core/models/class/board.class';
+import { ItemBoardComponent } from '../item-board/item-board.component';
 
 @Component({
   selector: 'app-list-board',
   standalone: true,
-  imports: [CardComponent],
+  imports: [ItemBoardComponent],
   templateUrl: './list-board.component.html',
   styleUrl: './list-board.component.scss'
 })
 export class ListBoardComponent implements OnInit {
-  public boards: any[] = [];
+  @Input() public boards?: Board[];
 
-  constructor(public localStorageService: LocalStorageService) {
-    this.retrieveBoards();
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-
-  }
-
-  retrieveBoards(): void {
-    this.boards = this.localStorageService.getAll('boards');
-  }
+  ngOnInit(): void {}
 }

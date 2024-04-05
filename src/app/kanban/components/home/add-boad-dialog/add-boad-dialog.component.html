@@ -17,6 +17,6 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onSaveClick()">Save</button>
+    <button mat-raised-button (click)="submit('cancel')">Cancel</button>
+    <button mat-raised-button color="primary" (click)="submit('valid')">Save</button>
 </mat-dialog-actions>
