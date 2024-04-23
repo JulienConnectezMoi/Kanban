@@ -3,6 +3,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { TitleCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,4 +17,10 @@ export class HeaderComponent {
   @Input() public isLoggedIn!: boolean;
 
   @Output() public logout = new EventEmitter<void>();
+
+  constructor(private router: Router) {} // Inject Router service
+
+  navigateToHome() {
+    this.router.navigate(['/home']); // Navigate to '/home'
+  }
 }

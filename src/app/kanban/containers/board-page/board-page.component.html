@@ -3,5 +3,11 @@
     Add Todo
     <mat-icon>add</mat-icon>
   </button>
-  <app-list-todo></app-list-todo>
+  <section>
+    <app-list-todo
+      [todos]="todos"
+      (onModify)="modifyTodo($event.todo, $event.withModal)"
+      (onDelete)="deleteTodo($event)"
+    ></app-list-todo>
+  </section>
 </main>

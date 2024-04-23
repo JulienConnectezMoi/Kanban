@@ -1,48 +1,89 @@
-import { Component } from '@angular/core';
-import { CardComponent } from '../card/card.component';
-import { LocalStorageService } from '../../../../core/services/local-storage.service';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
   CdkDragDrop,
-  moveItemInArray,
   transferArrayItem,
   CdkDrag,
   CdkDropList,
+  moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { ItemTodoComponent } from '../item-todo/ItemTodoComponent';
+import { Todo } from '../../../../core/class/todo.class';
+import { ActivatedRoute } from '@angular/router';
+
+// Enum pour représenter les états des tâches
+export enum TaskStatus {
+  TODO = "todo",
+  PROGRESS = "progress",
+  STANDBY = "standby",
+  BLOCKED = "blocked",
+  CLOSE = "close"
+}
+
+interface IUpdateTodoEvent {
+  todo: Todo;
+  withModal: boolean;
+}
 
 @Component({
   selector: 'app-list-todo',
   standalone: true,
-  imports: [CardComponent, CdkDropList, CdkDrag],
+  imports: [CdkDropList, CdkDrag, ItemTodoComponent],
   templateUrl: './list-todo.component.html',
   styleUrl: './list-todo.component.scss'
 })
-export class ListTodoComponent {
-  taskLists: any[] = [];
+export class ListTodoComponent implements OnInit, OnChanges {
+  @Input() public todos!: Todo[];
 
-  constructor(public localStorageService: LocalStorageService) {
-    this.retrieveTodos();
+  @Output() onModify = new EventEmitter<IUpdateTodoEvent>();
+  @Output() onDelete = new EventEmitter<number>();
+
+  todo: Todo[] = [];
+  progress: Todo[] = [];
+  standby: Todo[] = [];
+  blocked: Todo[] = [];
+  close: Todo[] = [];
+  boardId!: number;
+
+  public readonly taskStatutEnum = TaskStatus;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const todos = changes?.['todos']?.currentValue as Todo[]
+    if(todos) {
+      this.todo = todos.filter(t => t.status === TaskStatus.TODO)
+      this.progress = todos.filter(t => t.status === TaskStatus.PROGRESS)
+      this.standby = todos.filter(t => t.status === TaskStatus.STANDBY)
+      this.blocked = todos.filter(t => t.status === TaskStatus.BLOCKED)
+      this.close = todos.filter(t => t.status === TaskStatus.CLOSE)
+    }
   }
 
-  retrieveTodos(): void {
-    this.taskLists = [
-      { id: 'todo', title: 'To Do', tasks: this.localStorageService.getAll('todos') },
-      { id: 'standby', title: 'StandBy', tasks: this.localStorageService.getAll('standby') },
-      { id: 'progress', title: 'In Progress', tasks: this.localStorageService.getAll('progress') },
-      { id: 'blocked', title: 'Blocked', tasks: this.localStorageService.getAll('blocked') },
-      { id: 'close', title: 'Close', tasks: this.localStorageService.getAll('close') }
-    ];
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.boardId = +params['id'];
+      this.filterTodosByBoardId();
+    });
+
+    this.todo = this.todos.filter(t => t.status === TaskStatus.TODO)
+    this.progress = this.todos.filter(t => t.status === TaskStatus.PROGRESS)
+    this.standby = this.todos.filter(t => t.status === TaskStatus.STANDBY)
+    this.blocked = this.todos.filter(t => t.status === TaskStatus.BLOCKED)
+    this.close = this.todos.filter(t => t.status === TaskStatus.CLOSE)
   }
 
-  drop(event: CdkDragDrop<string[]>, targetList: any[]) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(targetList, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        targetList,
-        event.previousIndex,
-        event.currentIndex,
-      );
+  filterTodosByBoardId(): void {
+    if (this.todos && this.boardId) {
+      this.todo = this.todos.filter(todo => todo.id_parent === this.boardId);
+    }
+  }
+
+  drop(event: CdkDragDrop<Todo[]>, status: TaskStatus) {
+    if (event.previousContainer !== event.container) {
+      const item = event.item.data;
+      item.status = status;
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.onModify.emit({todo: item, withModal: false})
     }
   }
 }

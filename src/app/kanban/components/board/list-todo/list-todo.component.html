@@ -1,19 +1,103 @@
-@for (taskList of taskLists; track taskList) {
+<section>
   <div class="example-container">
-    <h2>{{ taskList.title }}</h2>
+    <h2>To do</h2>
 
     <div
       cdkDropList
-      [id]="taskList.id"
-      [cdkDropListData]="taskList.tasks"
-      [cdkDropListConnectedTo]="['todo', 'progress', 'standby', 'blocked', 'close']"
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[progressList, standbyList, blockedList, closeList]"
       class="example-list"
-      (cdkDropListDropped)="drop($event, taskList.tasks)">
-      <div>
-        @for(task of taskList.tasks; track task) {
-          <div class="example-box" cdkDrag>{{task.title}}</div>
-        }
-      </div>
+      (cdkDropListDropped)="drop($event, taskStatutEnum.TODO)">
+      @for (item of todo; track item.id) {
+        <app-item-todo
+          cdkDrag [cdkDragData]="item" [todo]="item"
+          (onModify)="onModify.emit({todo: $event, withModal: true})"
+          (onDelete)="onDelete.emit($event)"
+        ></app-item-todo>
+      }
     </div>
   </div>
-}
+
+  <div class="example-container">
+    <h2>In Progress</h2>
+
+    <div
+      cdkDropList
+      #progressList="cdkDropList"
+      [cdkDropListData]="progress"
+      [cdkDropListConnectedTo]="[todoList, standbyList, blockedList, closeList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, taskStatutEnum.PROGRESS)">
+      @for (item of progress; track item.id) {
+          <app-item-todo
+            cdkDrag [cdkDragData]="item" [todo]="item"
+            (onModify)="onModify.emit({todo: $event, withModal: true})"
+            (onDelete)="onDelete.emit($event)"
+          ></app-item-todo>
+
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Standby</h2>
+
+    <div
+      cdkDropList
+      #standbyList="cdkDropList"
+      [cdkDropListData]="standby"
+      [cdkDropListConnectedTo]="[todoList, progressList, blockedList, closeList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, taskStatutEnum.STANDBY)">
+      @for (item of standby; track item.id) {
+          <app-item-todo
+            cdkDrag [cdkDragData]="item" [todo]="item"
+            (onModify)="onModify.emit({todo: $event, withModal: true})"
+            (onDelete)="onDelete.emit($event)"
+          ></app-item-todo>
+
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Blocked</h2>
+
+    <div
+      cdkDropList
+      #blockedList="cdkDropList"
+      [cdkDropListData]="blocked"
+      [cdkDropListConnectedTo]="[todoList, progressList, standbyList, closeList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, taskStatutEnum.BLOCKED)">
+      @for (item of blocked; track item.id) {
+          <app-item-todo
+            cdkDrag [cdkDragData]="item" [todo]="item"
+            (onModify)="onModify.emit({todo: $event, withModal: true})"
+            (onDelete)="onDelete.emit($event)"
+          ></app-item-todo>
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Close</h2>
+
+    <div
+      cdkDropList
+      #closeList="cdkDropList"
+      [cdkDropListData]="close"
+      [cdkDropListConnectedTo]="[todoList, standbyList, blockedList, progressList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event, taskStatutEnum.CLOSE)">
+      @for (item of close; track item.id) {
+          <app-item-todo
+            cdkDrag [cdkDragData]="item" [todo]="item"
+            (onModify)="onModify.emit({todo: $event, withModal: true})"
+            (onDelete)="onDelete.emit($event)"
+          ></app-item-todo>
+      }
+    </div>
+  </div>
+</section>

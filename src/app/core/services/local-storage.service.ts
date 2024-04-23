@@ -34,7 +34,7 @@ export class LocalStorageService {
 
   public deleteOne(
     key: string,
-    identifier: string,
+    identifier: number,
     identifierName = 'id'
   ): void {
     const allItems = this.getAll(key);

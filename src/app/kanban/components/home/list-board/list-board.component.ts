@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Board } from '../../../../core/models/class/board.class';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Board } from '../../../../core/class/board.class';
 import { ItemBoardComponent } from '../item-board/item-board.component';
 
 @Component({
@@ -11,8 +11,13 @@ import { ItemBoardComponent } from '../item-board/item-board.component';
 })
 export class ListBoardComponent implements OnInit {
   @Input() public boards?: Board[];
+  @Output() boardSelected = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  selectBoard(boardId: number): void {
+    this.boardSelected.emit(boardId);
+  }
 }

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Board } from '../../../../core/models/class/board.class';
+import { Board } from '../../../../core/class/board.class';
 
 @Component({
   selector: 'app-item-board',
@@ -11,11 +11,13 @@ import { Board } from '../../../../core/models/class/board.class';
 })
 export class ItemBoardComponent implements OnInit {
   @Input() public board!: Board;
+  @Output() boardSelected = new EventEmitter<number>();
 
   constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  selectBoard(boardId: number): void {
+    this.boardSelected.emit(boardId);
   }
 }
-

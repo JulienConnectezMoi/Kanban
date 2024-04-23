@@ -1,8 +1,8 @@
 <section class="columns">
   @for(board of boards; track board.id) {
     <app-item-board
-    [board]="board"
-    >
-    </app-item-board>
+      [board]="board"
+      (boardSelected)="selectBoard($event)"
+    ></app-item-board>
   }
 </section>

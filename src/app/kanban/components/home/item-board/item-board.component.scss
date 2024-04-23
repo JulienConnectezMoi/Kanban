@@ -1,0 +1,15 @@
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-header {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

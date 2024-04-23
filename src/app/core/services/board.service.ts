@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
+import { Board } from '../class/board.class';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +9,12 @@ export class BoardService {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  fetchBoards(): any[] {
-    return this.localStorageService.getAll('boards');
+  getAllBoards(): Board[] {
+    return this.localStorageService.getAll('boards') || [];
   }
 
-  addBoard(boardItem: any): void {
-    this.localStorageService.setOne('boards', boardItem);
+  addBoard(title: string, description: string, url: string): void {
+    const board = Board.init(title, description, url);
+    this.localStorageService.setOne('boards', board);
   }
 }

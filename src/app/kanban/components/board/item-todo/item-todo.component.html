@@ -1,0 +1,10 @@
+<mat-card [id]="todo.id" class="example-box">
+    <div>
+        <mat-card-header>{{todo.title}}</mat-card-header>
+        <mat-card-content>{{todo.description}}</mat-card-content>
+    </div>
+    <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="onModify.emit(this.todo)">Modify</button>
+        <button mat-flat-button color="warn" (click)="onDelete.emit(todo.id)">Delete</button>
+    </mat-card-actions>
+</mat-card>

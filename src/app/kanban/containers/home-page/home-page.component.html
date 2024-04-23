@@ -4,7 +4,11 @@
     <mat-icon>add</mat-icon>
   </button>
 
-  <app-list-board
-    [boards]="boards"
-  ></app-list-board>
+  <section>
+    <h1>Liste des Kanban</h1>
+    <app-list-board
+      [boards]="boards"
+      (boardSelected)="openKanban($event)"
+    ></app-list-board>
+  </section>
 </main>
